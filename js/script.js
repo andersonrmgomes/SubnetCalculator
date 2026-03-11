@@ -317,6 +317,7 @@ function drawBinaryGrid(ipLong, networkLong, broadcastLong, maskLong, cidr) {
         html += `<div class="bit ${cls}">${bit}</div>`;
       }
       html += '</div>';
+      if (group < 3) html += '<div class="octet-dot">.</div>';
     }
     return html;
   }

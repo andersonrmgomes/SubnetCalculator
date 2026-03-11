@@ -270,7 +270,7 @@
   .legend-label { color: var(--dim); flex: 1; }
   .legend-val { color: var(--text); font-size: 13px; }
 
-  /* BINARY CLOCK */
+  /* BINARY SECTION */
   .binary-section {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -283,52 +283,59 @@
   .binary-grid {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
   }
 
   .binary-row {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
   }
   .binary-row-label {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--dim);
-    letter-spacing: 2px;
-    width: 120px;
-    flex-shrink: 0;
+    letter-spacing: 1px;
+    white-space: nowrap;
   }
   .binary-bits {
     display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    flex: 1;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
   }
   .bit-group {
     display: flex;
-    gap: 4px;
-    margin-right: 8px;
+    flex: 1;
+    gap: clamp(1px, 0.3vw, 4px);
   }
-  .bit-group:last-child { margin-right: 0; }
-
+  .octet-dot {
+    color: var(--cyan);
+    font-weight: 700;
+    font-size: clamp(10px, 1.5vw, 18px);
+    padding: 0 clamp(2px, 0.4vw, 6px);
+    line-height: 1;
+    flex-shrink: 0;
+  }
   .bit {
-    width: 28px; height: 28px;
+    flex: 1;
+    aspect-ratio: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: clamp(8px, 1.1vw, 14px);
     font-weight: 700;
     border: 1px solid var(--border);
     transition: all 0.3s;
     cursor: default;
-    position: relative;
   }
   .bit.on {
     background: rgba(0,255,136,0.15);
     border-color: var(--green);
     color: var(--green);
-    box-shadow: 0 0 8px rgba(0,255,136,0.4);
+    box-shadow: 0 0 6px rgba(0,255,136,0.4);
     animation: bitPulse 0.5s ease;
   }
   .bit.off {
@@ -340,24 +347,23 @@
     background: rgba(0,229,255,0.15);
     border-color: var(--cyan);
     color: var(--cyan);
-    box-shadow: 0 0 8px rgba(0,229,255,0.4);
+    box-shadow: 0 0 6px rgba(0,229,255,0.4);
   }
   .bit.host-bit.on {
     background: rgba(255,107,53,0.15);
     border-color: var(--orange);
     color: var(--orange);
-    box-shadow: 0 0 8px rgba(255,107,53,0.4);
+    box-shadow: 0 0 6px rgba(255,107,53,0.4);
   }
   @keyframes bitPulse {
-    0% { transform: scale(1.3); }
+    0% { transform: scale(1.2); }
     100% { transform: scale(1); }
   }
-
   .binary-value {
-    font-size: 13px;
+    font-size: clamp(9px, 1.1vw, 13px);
     color: var(--text);
-    margin-left: 8px;
-    flex-shrink: 0;
+    white-space: nowrap;
+    text-align: right;
   }
 
   /* MASK CLOCK - relógio/medidor */
@@ -509,10 +515,38 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--dim); }
 
-  /* Responsive */
-  @media (max-width: 500px) {
-    .binary-row { flex-direction: column; align-items: flex-start; }
-    .binary-row-label { width: auto; }
-    .bit { width: 22px; height: 22px; font-size: 11px; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .grid-top { grid-template-columns: 1fr; }
+    .clock-container { flex-direction: column; gap: 24px; }
+    .mask-octets { width: 100%; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    .input-panel { padding: 16px; }
+    .input-row { flex-direction: column; }
+    .field { min-width: unset; width: 100%; }
+    .btn-calc { width: 100%; }
+
+    /* binary: tighten label column on mobile */
+    .binary-row { grid-template-columns: 72px 1fr auto; gap: 4px; }
+    .binary-row-label { font-size: 9px; letter-spacing: 0; }
+    .binary-value { font-size: 9px; }
+    .octet-dot { padding: 0 clamp(1px, 0.8vw, 4px); }
+
     .octet-bit { width: 18px; height: 18px; font-size: 10px; }
+    .binary-section { padding: 14px; }
+    .hosts-section { padding: 16px; }
+    .clock-section { padding: 16px; }
+    .panel { padding: 14px; }
+    .gauge-wrap { width: 160px; height: 160px; }
+    #gaugeCanvas { width: 160px; height: 160px; }
+    .gauge-value { font-size: 24px; }
+  }
+
+  @media (max-width: 420px) {
+    .binary-row { grid-template-columns: 60px 1fr; }
+    /* hide IP value on very small screens to save space */
+    .binary-value { display: none; }
   }
