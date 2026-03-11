@@ -281,23 +281,21 @@
   .binary-section .panel-title { color: var(--green); }
 
   .binary-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .binary-row {
+    /* Single shared grid: label | bits-area | ip-value */
     display: grid;
     grid-template-columns: 90px 1fr auto;
+    grid-template-rows: repeat(4, auto);
+    gap: 8px 8px;
     align-items: center;
-    gap: 8px;
-    min-width: 0;
   }
+
+  /* Each row is NOT a wrapper — label, bits, value are direct grid children */
   .binary-row-label {
     font-size: 10px;
     color: var(--dim);
     letter-spacing: 1px;
     white-space: nowrap;
+    align-self: center;
   }
   .binary-bits {
     display: flex;
@@ -364,6 +362,7 @@
     color: var(--text);
     white-space: nowrap;
     text-align: right;
+    align-self: center;
   }
 
   /* MASK CLOCK - relógio/medidor */
@@ -529,11 +528,10 @@
     .field { min-width: unset; width: 100%; }
     .btn-calc { width: 100%; }
 
-    /* binary: tighten label column on mobile */
-    .binary-row { grid-template-columns: 72px 1fr auto; gap: 4px; }
+    .binary-grid { grid-template-columns: 64px 1fr auto; gap: 6px 4px; }
     .binary-row-label { font-size: 9px; letter-spacing: 0; }
     .binary-value { font-size: 9px; }
-    .octet-dot { padding: 0 clamp(1px, 0.8vw, 4px); }
+    .octet-dot { padding: 0 clamp(1px, 0.8vw, 3px); }
 
     .octet-bit { width: 18px; height: 18px; font-size: 10px; }
     .binary-section { padding: 14px; }
@@ -546,7 +544,6 @@
   }
 
   @media (max-width: 420px) {
-    .binary-row { grid-template-columns: 60px 1fr; }
-    /* hide IP value on very small screens to save space */
+    .binary-grid { grid-template-columns: 56px 1fr; }
     .binary-value { display: none; }
   }

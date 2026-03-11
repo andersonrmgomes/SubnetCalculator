@@ -329,17 +329,16 @@ function drawBinaryGrid(ipLong, networkLong, broadcastLong, maskLong, cidr) {
     { label: 'BROADCAST', val: broadcastLong, mode: '' },
   ];
 
+  // Emit label + bits + value as flat grid children (no row wrapper)
   container.innerHTML = rows.map(r => `
-    <div class="binary-row">
-      <div class="binary-row-label">${r.label}</div>
-      <div class="binary-bits">${renderBits(r.val, cidr, r.mode)}</div>
-      <div class="binary-value">${longToIp(r.val)}</div>
-    </div>
+    <div class="binary-row-label">${r.label}</div>
+    <div class="binary-bits">${renderBits(r.val, cidr, r.mode)}</div>
+    <div class="binary-value">${longToIp(r.val)}</div>
   `).join('');
 
-  // Legend for binary colors
+  // Legend spans all 3 columns
   container.innerHTML += `
-    <div style="margin-top:12px;display:flex;gap:20px;flex-wrap:wrap;">
+    <div style="grid-column:1/-1;margin-top:4px;display:flex;gap:20px;flex-wrap:wrap;">
       <span style="font-size:11px;color:#00e5ff;">■ bits de REDE</span>
       <span style="font-size:11px;color:#ff6b35;">■ bits de HOST</span>
       <span style="font-size:11px;color:#00ff88;">■ bit 1</span>
