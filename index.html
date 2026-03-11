@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SubnetVis — Calculadora de Sub-redes</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div class="scanline"></div>
+
+<div class="container">
+  <header>
+    <div class="logo">SUBNET<span style="color:var(--green)">VISUAL</span></div>
+    <div class="tagline">Calculadora Visual de Sub-redes IPv4</div>
+  </header>
+
+  <!-- INPUT -->
+  <div class="input-panel">
+    <div class="input-row">
+      <div class="field">
+        <label>Endereço IP</label>
+        <input type="text" id="ipInput" placeholder="192.168.1.0" value="192.168.1.0">
+      </div>
+      <div class="field" style="max-width:120px; min-width:100px;">
+        <label>Prefixo CIDR</label>
+        <select id="cidrInput">
+          <!-- populated by JS -->
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calculate()"><span>▶ CALCULAR</span></button>
+    </div>
+    <div class="error-msg" id="errorMsg">⚠ IP inválido. Use o formato: 192.168.1.0</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- TOP GRID: Info + Pizza -->
+    <div class="grid-top">
+      <div class="panel">
+        <div class="panel-title">◈ INFORMAÇÕES DA REDE</div>
+        <table class="info-table" id="infoTable"></table>
+      </div>
+      <div class="panel">
+        <div class="panel-title">◈ DISTRIBUIÇÃO DE ENDEREÇOS</div>
+        <div class="pizza-wrap">
+          <canvas id="pieCanvas" width="180" height="180"></canvas>
+          <div class="pie-legend" id="pieLegend"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MASK CLOCK -->
+    <div class="clock-section">
+      <div class="panel-title">◈ MEDIDOR DE MÁSCARA — REPRESENTAÇÃO BINÁRIA</div>
+      <div class="clock-container">
+        <div class="gauge-wrap">
+          <canvas id="gaugeCanvas" width="200" height="200"></canvas>
+          <div class="gauge-center">
+            <div class="gauge-value" id="gaugeVal">/24</div>
+            <div class="gauge-label">CIDR PREFIX</div>
+          </div>
+        </div>
+        <div class="mask-octets" id="maskOctets"></div>
+      </div>
+    </div>
+
+    <!-- BINARY DISPLAY -->
+    <div class="binary-section">
+      <div class="panel-title">◈ MAPA BINÁRIO DOS ENDEREÇOS</div>
+      <div class="binary-grid" id="binaryGrid"></div>
+    </div>
+
+    <!-- HOSTS -->
+    <div class="hosts-section">
+      <div class="panel-title" style="font-family:'Orbitron',monospace;font-size:11px;letter-spacing:4px;color:var(--cyan);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);">◈ CAPACIDADE DA REDE</div>
+      <div id="hostsInfo"></div>
+      <div class="hosts-bar"><div class="hosts-bar-fill" id="hostsBar" style="width:0%"></div></div>
+      <div id="subnetsContainer"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
